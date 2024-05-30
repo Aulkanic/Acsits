@@ -1,7 +1,7 @@
 import './App.css'
 import { Private, Public } from './layout'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { AboutUsPage, AchievementsPage, Error, LandingPage, Login, Signup } from './pages'
+import { AboutUsPage, AchievementsPage, Error, HomePage, LandingPage, Login, Signup } from './pages'
 import { RouterUrl } from './routes'
 import Form from './layout/form'
 
@@ -30,6 +30,10 @@ function App() {
       path:RouterUrl.LANDINGPAGE,
       element : <Private />,
       children:[
+        {
+          path: RouterUrl.HOME,
+          element:<HomePage />
+        },
       ]
     },
     {
