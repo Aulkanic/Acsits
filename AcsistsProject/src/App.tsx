@@ -1,7 +1,7 @@
 import './App.css'
 import { Private, Public } from './layout'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { AboutUsPage, AchievementsPage, Error, HomePage, LandingPage, Login, Signup } from './pages'
+import { AboutUsPage, AchievementsPage, AnnouncementPage, Error, HomePage, LandingPage, Login, MerchandisePage, PlansPage, ProfilePage, Signup, TaskPage } from './pages'
 import { RouterUrl } from './routes'
 import Form from './layout/form'
 
@@ -33,6 +33,26 @@ function App() {
         {
           path: RouterUrl.HOME,
           element:<HomePage />
+        },
+        {
+          path: RouterUrl.ANNOUNCMENT,
+          element:<AnnouncementPage />
+        },
+        {
+          path: RouterUrl.TASK,
+          element:<TaskPage />
+        },
+        {
+          path: RouterUrl.PLANS,
+          element:<PlansPage />
+        },
+        {
+          path: RouterUrl.MERCHANDISE,
+          element:<MerchandisePage />
+        },
+        {
+          path: RouterUrl.PROFILE,
+          element:<ProfilePage />
         },
       ]
     },

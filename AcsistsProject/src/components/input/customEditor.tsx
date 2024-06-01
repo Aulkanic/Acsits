@@ -13,6 +13,7 @@ interface ICustomTextEditorProps {
   classes?: string | any;
   label?: string;
   error?: string;
+  placeholder?:string;
 }
 
 function CustomTextEditor(props: ICustomTextEditorProps) {
@@ -31,6 +32,7 @@ function CustomTextEditor(props: ICustomTextEditorProps) {
         formats={QUILL_FORMATS}
         modules={QUILL_MODULES}
         value={props.value}
+        placeholder={props.placeholder  || 'Start typing...'}
         defaultValue={props.defaultValue}
         onChange={(value) => props.onChange && props.onChange(value)}
       />
