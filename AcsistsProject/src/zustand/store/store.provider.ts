@@ -6,7 +6,9 @@ export const{
     saveOfficerInfo,
     saveAllOfficers,
     saveAllAnnouncements,
-    saveAllTasks
+    saveAllTasks,
+    saveAllEvents,
+    saveAllNotification
 } = storeProvider
 
 export { selector, storeProvider };

@@ -42,7 +42,15 @@ export const TaskPage = () => {
       setLoading(true);
       values.dueDate = values.dueDate.format('YYYY-MM-DD');
       values.status = 'Pending';
+      const assignedTo = officer.officers?.find((v:any) => v.id === values.officerId)
       await addData('doc_tasks', values);
+      const notifData = {
+        officerSender: officer.info.id,
+        officerReceiver: values.officerId,
+        content: `${officer.info.fullName} assigned ${assignedTo.fullName} a task!`,
+        date: new Date().toLocaleDateString(),
+      }
+      await addData('doc_notification',notifData)
       notification.success({ message: 'Task Added Successfully', description: 'Task Added Successfully', duration: 2 });
       form.resetFields();
       setLoading(false);
@@ -59,6 +67,13 @@ export const TaskPage = () => {
   const markAsComplete = async (taskId: string) => {
     try {
       await updateData('doc_tasks', taskId, { status: 'Completed' });
+      const notifData = {
+        officerSender: officer.info.id,
+        officerReceiver: '',
+        content: `${officer.info.fullName} accomplished a task!`,
+        date: new Date().toLocaleDateString(),
+      }
+      await addData('doc_notification',notifData)
       notification.success({ message: 'Task marked as completed', duration: 2 });
       Fetch();
     } catch (error: any) {
