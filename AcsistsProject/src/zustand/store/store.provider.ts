@@ -8,7 +8,8 @@ export const{
     saveAllAnnouncements,
     saveAllTasks,
     saveAllEvents,
-    saveAllNotification
+    saveAllNotification,
+    signOut
 } = storeProvider
 
 export { selector, storeProvider };

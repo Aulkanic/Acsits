@@ -26,6 +26,7 @@ export const PlansPage = () => {
 
   const handleOk = async () => {
     try {
+      console.log(officer)
       setLoading(true)
       const values = await form.validateFields();
       values.officerId = officer.info.id
@@ -44,6 +45,7 @@ export const PlansPage = () => {
       setIsModalVisible(false);
     } catch (error) {
       console.error("Error adding document: ", error);
+      setLoading(false)
     }
   };
 
@@ -66,7 +68,6 @@ export const PlansPage = () => {
     }
     return info.originNode;
   };
-  console.log(officer)
 
   return (
     <div className='px-16 py-12'>

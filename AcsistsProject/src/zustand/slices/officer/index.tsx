@@ -23,6 +23,7 @@ export interface OfficerSlice {
     saveAllTasks: (payload:any) => void;
     saveAllEvents: (payload:any) => void;
     saveAllNotification: (payload:any) => void;
+    signOut: () => void;
 }
 
 const initialState: OfficerState = {
@@ -30,6 +31,9 @@ const initialState: OfficerState = {
     info: null,
     officers: [],
     events:[],
+    tasks:[],
+    notification:[],
+    announcements:[],
     error: null
 }
 
@@ -95,6 +99,9 @@ const createOfficerState: StateCreator<OfficerSlice> = (set) =>({
             },
         }));
     },
+    signOut:() =>{
+        set({ officer: initialState });
+    }
 })
 
 export default createOfficerState

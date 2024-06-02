@@ -66,6 +66,7 @@ export const TaskPage = () => {
 
   const markAsComplete = async (taskId: string) => {
     try {
+      setLoading(true);
       await updateData('doc_tasks', taskId, { status: 'Completed' });
       const notifData = {
         officerSender: officer.info.id,
@@ -74,6 +75,7 @@ export const TaskPage = () => {
         date: new Date().toLocaleDateString(),
       }
       await addData('doc_notification',notifData)
+      setLoading(false)
       notification.success({ message: 'Task marked as completed', duration: 2 });
       Fetch();
     } catch (error: any) {
@@ -81,6 +83,7 @@ export const TaskPage = () => {
         message: 'Error',
         description: error.message || 'Failed to update task status',
       });
+      setLoading(false)
     }
   };
 
@@ -141,7 +144,7 @@ export const TaskPage = () => {
                 return(
                 <List.Item
                   actions={[
-                    <Button type="primary" onClick={() => markAsComplete(item.id)}>Mark as Complete</Button>
+                    <Button loading={loading} type="primary" onClick={() => markAsComplete(item.id)}>Mark as Complete</Button>
                   ]}
                 >
                   <List.Item.Meta

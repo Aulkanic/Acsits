@@ -3,13 +3,16 @@ import { Form, Image, Input, Button, Upload, message, notification } from 'antd'
 import { UploadOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import useStore from '../../../zustand/store/store';
-import { saveOfficerInfo, selector } from '../../../zustand/store/store.provider';
+import { saveOfficerInfo, selector, signOut } from '../../../zustand/store/store.provider';
 import { updateData } from '../../../hooks/useUpdateData'; 
 import { uploadImageToStorage } from '../../../hooks/uploadFile';
 import { UploadFile } from 'antd/es/upload/interface';
 import { CustomButton } from '../../../components/button/customButton';
+import { useNavigate } from 'react-router-dom';
+import { RouterUrl } from '../../../routes';
 
 export const ProfilePage = () => {
+  const navigate = useNavigate()
   const [form] = Form.useForm();
   const officer = useStore(selector('officer'));
   const [isEditing, setIsEditing] = useState(false);
@@ -73,6 +76,12 @@ export const ProfilePage = () => {
       setPreviewImage(undefined);
     }
   };
+  const handleSignout = () =>{
+     setTimeout(() =>{
+      signOut()
+      navigate(RouterUrl.LOGIN)
+     },1000)
+  }
 
   return (
     <div className='flex w-full min-h-screen justify-center items-top py-24'>
@@ -119,6 +128,7 @@ export const ProfilePage = () => {
           )}
           <CustomButton
             children='Sign out'
+            onClick={() => handleSignout()}
           />
           </div>
 

@@ -3,7 +3,7 @@ import Logo from '../assets/logo.png'
 import LPBG from '../assets/acsits-1.png'
 import { IoNotificationsSharp } from "react-icons/io5";
 import { Avatar, Badge, Popover } from 'antd';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { RouterUrl } from '../routes';
 import { useEffect, useState } from 'react';
 import { fetchData } from '../hooks/useFetchData';
@@ -38,7 +38,7 @@ export default function Private() {
     <div className='w-[350px]'>
       <h1 className='font-[700] text-[20px]'>Notifications</h1>
       <div className='flex flex-col gap-4 my-4'>
-      {officer.notification?.map((v:any) =>{
+      {officer.notification?.sort((a: { date: string | number | Date; }, b: { date: string | number | Date; }) => new Date(b.date).getTime() - new Date(a.date).getTime())?.map((v:any) =>{
          const details = officer.officers?.find((y:any) => y.id === v.officerSender)
         return details ? (
         <div className='flex gap-4 items-top pb-4'>
@@ -49,8 +49,7 @@ export default function Private() {
       </div>
     </div>
   );
-console.log(officer)
-  return (
+  return officer.info ? (
     <div className='min-h-screen w-full bg-center relative bg-no-repeat bg-cover overflow-hidden' style={{ backgroundImage: `url(${LPBG})` }}>
       <header className='fixed top-0 flex items-center p-8 justify-between h-[111px] bg-[#060E613B] w-full'>
         <div className='flex items-center gap-16'>
@@ -88,7 +87,7 @@ console.log(officer)
             onOpenChange={handleOpenChange}
             >
             <Badge offset={[-5, 25]} showZero count={officer.notification.length || 0}>
-              <IoNotificationsSharp color='white' size={36} className='rotate-45' />
+              <IoNotificationsSharp color='white' size={36} className='rotate-45 cursor-pointer' />
             </Badge>
             </Popover>
           </li>
@@ -102,5 +101,7 @@ console.log(officer)
         <Outlet />
       </main>
     </div>
+  ) : (
+    <Navigate replace to={RouterUrl.LOGIN} />
   )
 }
