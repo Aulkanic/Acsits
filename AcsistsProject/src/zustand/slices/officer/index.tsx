@@ -12,6 +12,7 @@ interface OfficerState {
     tasks?:any;
     events?:any;
     notification?:any;
+    merchandise?:any;
     error?: string | null;
 }
 
@@ -23,6 +24,7 @@ export interface OfficerSlice {
     saveAllTasks: (payload:any) => void;
     saveAllEvents: (payload:any) => void;
     saveAllNotification: (payload:any) => void;
+    saveAllMerchandise: (payload:any) => void;
     signOut: () => void;
 }
 
@@ -95,6 +97,16 @@ const createOfficerState: StateCreator<OfficerSlice> = (set) =>({
             officer: {
                 ...state.officer,
                 notification: payload,
+                loading: false
+            },
+        }));
+    },
+    saveAllMerchandise: (payload:any) =>{
+        set((state) => ({
+            ...state,
+            officer: {
+                ...state.officer,
+                merchandise: payload,
                 loading: false
             },
         }));

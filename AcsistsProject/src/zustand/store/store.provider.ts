@@ -9,6 +9,7 @@ export const{
     saveAllTasks,
     saveAllEvents,
     saveAllNotification,
+    saveAllMerchandise,
     signOut
 } = storeProvider
 
