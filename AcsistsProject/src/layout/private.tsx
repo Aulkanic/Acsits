@@ -41,9 +41,11 @@ export default function Private() {
       {officer.notification?.sort((a: { date: string | number | Date; }, b: { date: string | number | Date; }) => new Date(b.date).getTime() - new Date(a.date).getTime())?.map((v:any) =>{
          const details = officer.officers?.find((y:any) => y.id === v.officerSender)
         return details ? (
-        <div className='flex gap-4 items-top pb-4'>
+        <div className='flex gap-4 items-top pb-4 flex-nowrap'>
+          <div className='w-[60px]'>
           <Avatar className='border-2 border-gray-200' size={50} src={details.profile || ''} />
-          <p>{details.fullName} {v.content}</p>
+          </div>
+          <p className='text-left flex-1'>{details.fullName} {v.content}</p>
         </div>
       ) : null})}
       </div>
