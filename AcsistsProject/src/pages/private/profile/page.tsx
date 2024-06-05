@@ -76,7 +76,8 @@ export const ProfilePage = () => {
       setPreviewImage(undefined);
     }
   };
-  const handleSignout = () =>{
+  const handleSignout = async() =>{
+    await updateData('doc_users',officer.info.id,{isOnline:false})
      setTimeout(() =>{
       signOut()
       navigate(RouterUrl.LOGIN)

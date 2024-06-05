@@ -9,6 +9,7 @@ import useStore from '../../../zustand/store/store';
 import { saveAllOfficers, saveOfficerInfo, selector } from '../../../zustand/store/store.provider';
 import { useEffect, useState } from 'react';
 import { fetchData } from '../../../hooks/useFetchData';
+import { updateData } from '../../../hooks/useUpdateData';
 
 export const Login = () => {
   const [form] = Form.useForm()
@@ -32,6 +33,7 @@ export const Login = () => {
       const isExist = user.officers?.find((item:any) => item.email === values.email && item.password === values.password);
       if(isExist){
         saveOfficerInfo(isExist)
+        await updateData('doc_users',isExist.id,{isOnline:true})
         notification.success({
           message: 'Login Success',
         })

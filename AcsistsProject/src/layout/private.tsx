@@ -38,10 +38,10 @@ export default function Private() {
     <div className='w-[350px]'>
       <h1 className='font-[700] text-[20px]'>Notifications</h1>
       <div className='flex flex-col gap-4 my-4'>
-      {officer.notification?.sort((a: { date: string | number | Date; }, b: { date: string | number | Date; }) => new Date(b.date).getTime() - new Date(a.date).getTime())?.map((v:any) =>{
+      {officer.notification?.sort((a: { date: string | number | Date; }, b: { date: string | number | Date; }) => new Date(b.date).getTime() - new Date(a.date).getTime())?.map((v:any,idx:number) =>{
          const details = officer.officers?.find((y:any) => y.id === v.officerSender)
         return details ? (
-        <div className='flex gap-4 items-top pb-4 flex-nowrap'>
+        <div key={idx} className='flex gap-4 items-top pb-4 flex-nowrap'>
           <div className='w-[60px]'>
           <Avatar className='border-2 border-gray-200' size={50} src={details.profile || ''} />
           </div>
