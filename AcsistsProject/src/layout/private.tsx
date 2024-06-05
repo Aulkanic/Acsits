@@ -53,7 +53,7 @@ export default function Private() {
   );
   return officer.info ? (
     <div className='min-h-screen w-full bg-center relative bg-no-repeat bg-cover overflow-hidden' style={{ backgroundImage: `url(${LPBG})` }}>
-      <header className='fixed top-0 flex items-center p-8 justify-between h-[111px] bg-[#060E613B] w-full'>
+      <header className='fixed z-50 top-0 flex items-center p-8 justify-between h-[111px] bg-[#060E613B] w-full'>
         <div className='flex items-center gap-16'>
           <img className='w-32 h-full object-fill' src={Logo} alt="" />
           <ul className='flex gap-8'>

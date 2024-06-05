@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 import CustomTextEditor from '../../../components/input/customEditor';
-import { Avatar, Dropdown, MenuProps, notification } from 'antd';
+import { Avatar, Dropdown, MenuProps, notification, Skeleton } from 'antd';
 import useStore from '../../../zustand/store/store';
 import { saveAllAnnouncements, saveAllOfficers, selector } from '../../../zustand/store/store.provider';
 import { CustomButton } from '../../../components/button/customButton';
@@ -19,13 +19,20 @@ export const AnnouncementPage = () => {
   const [loading, setLoading] = useState(false);
   const [editContent, setEditContent] = useState('');
   const [editId, setEditId] = useState<string | null>(null);
+  const [fetching, setFetching] = useState(true);
 
   async function Fetch() {
-    const user = await fetchData('doc_users');
-    const res = await fetchDataCondition('doc_announcements', [{ field: "officerId", operator: "==", value: officer.info?.id }]);
-    user.shift()
-    saveAllOfficers(user)
-    saveAllAnnouncements(res);
+    try {
+      setFetching(true);
+      console.log(officer)
+      const user = await fetchData('doc_users');
+      const res = await fetchDataCondition('doc_announcements', [{ field: "officerId", operator: "==", value: officer.info?.id }]);
+      user.shift()
+      saveAllOfficers(user);
+      saveAllAnnouncements(res);
+    } finally {
+      setFetching(false);
+    }
   }
 
   useEffect(() => {
@@ -52,9 +59,8 @@ export const AnnouncementPage = () => {
         date: new Date().toLocaleDateString(),
       }
       await addData('doc_announcements', dataToSend);
-      await addData('doc_notification',notifData)
+      await addData('doc_notification', notifData)
       notification.success({ message: 'Announcement added successfully!' });
-      setLoading(false);
       setContent('');
       Fetch();
     } catch (error) {
@@ -62,6 +68,7 @@ export const AnnouncementPage = () => {
         message: 'Error',
         description: 'Something went wrong, please try again later',
       });
+    } finally {
       setLoading(false);
     }
   };
@@ -82,7 +89,6 @@ export const AnnouncementPage = () => {
         await updateData('doc_announcements', editId, dataToUpdate);
       }
       notification.success({ message: 'Announcement updated successfully!' });
-      setLoading(false);
       setEditId(null);
       setEditContent('');
       Fetch();
@@ -91,6 +97,7 @@ export const AnnouncementPage = () => {
         message: 'Error',
         description: 'Something went wrong, please try again later',
       });
+    } finally {
       setLoading(false);
     }
   };
@@ -143,12 +150,16 @@ export const AnnouncementPage = () => {
       label: <p onClick={() => showDeleteConfirmation(id)}>Delete</p>,
     },
   ];
-  console.log(officer)
+
   return (
     <div className='flex flex-col gap-16 items-center justify-top my-12 h-full'>
       <div className='flex gap-8 w-[60%] bg-white shadow-[0px_8px_5px_0px_#a0aec0] p-12 rounded-lg'>
         <div className='w-[150px]'>
-          <Avatar src={officer.info?.profile || ''} size={150} />
+          {fetching ? (
+            <Skeleton.Avatar active size={150} shape="circle" />
+          ) : (
+            <Avatar src={officer.info?.profile || ''} size={150} />
+          )}
         </div>
         <div>
           <div className='w-full flex justify-between items-center mb-4'>
@@ -169,10 +180,15 @@ export const AnnouncementPage = () => {
       </div>
 
       <div className='flex flex-wrap gap-8'>
-        {officer.announcements?.length > 0 ? 
+        {fetching ? (
+          <>
+            <Skeleton active paragraph={{ rows: 4 }} className="w-[400px] min-h-[300px] bg-white p-4 rounded-lg shadow-[0px_8px_5px_0px_#a0aec0]" />
+            <Skeleton active paragraph={{ rows: 4 }} className="w-[400px] min-h-[300px] bg-white p-4 rounded-lg shadow-[0px_8px_5px_0px_#a0aec0]" />
+            <Skeleton active paragraph={{ rows: 4 }} className="w-[400px] min-h-[300px] bg-white p-4 rounded-lg shadow-[0px_8px_5px_0px_#a0aec0]" />
+          </>
+        ) : officer.announcements?.length > 0 ? (
           officer.announcements?.map((data: any) => {
             const details = officer.officers?.find((v: any) => v.id === data.officerId);
-            console.log(details)
             return details ? (
               <div key={data.id} className='w-[400px] bg-white min-h-[300px] shadow-[0px_8px_5px_0px_#a0aec0] p-4 rounded-lg'>
                 <div className='flex items-center justify-between pr-4'>
@@ -209,9 +225,9 @@ export const AnnouncementPage = () => {
               </div>
             ) : null;
           })
-          :
+        ) : (
           <p>No Announcements been made</p>
-        }
+        )}
       </div>
     </div>
   );

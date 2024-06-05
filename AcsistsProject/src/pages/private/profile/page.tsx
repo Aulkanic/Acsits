@@ -19,6 +19,7 @@ export const ProfilePage = () => {
   const [profileImage, setProfileImage] = useState(officer.info.profile);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [loading,setLoading] = useState(false)
+  const [signingOut,setSigningOut] = useState(false)
   const [previewImage, setPreviewImage] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -50,6 +51,7 @@ export const ProfilePage = () => {
         message: 'Success',
         description: 'Profile updated successfully',
       })
+      values.id = officer.info.id;
       setIsEditing(false);
       saveOfficerInfo(values);
       setProfileImage(values.profile);
@@ -77,9 +79,11 @@ export const ProfilePage = () => {
     }
   };
   const handleSignout = async() =>{
+    setSigningOut(true)
     await updateData('doc_users',officer.info.id,{isOnline:false})
      setTimeout(() =>{
       signOut()
+      setSigningOut(false)
       navigate(RouterUrl.LOGIN)
      },1000)
   }
@@ -129,6 +133,7 @@ export const ProfilePage = () => {
           )}
           <CustomButton
             children='Sign out'
+            loading={signingOut}
             onClick={() => handleSignout()}
           />
           </div>
