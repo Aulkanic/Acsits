@@ -4,6 +4,8 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { AboutUsPage, AchievementsPage, AnnouncementPage, Error, HomePage, LandingPage, Login, MerchandisePage, PlansPage, ProfilePage, Signup, TaskPage } from './pages'
 import { RouterUrl } from './routes'
 import Form from './layout/form'
+import { LEventPage } from './pages/public/landingPage/events'
+import { LMerchandisePage } from './pages/public/landingPage/merchandise'
 
 function App() {
   const router = createBrowserRouter([
@@ -23,6 +25,14 @@ function App() {
         {
           path: RouterUrl.ABOUTUS,
           element:<AboutUsPage />
+        },
+        {
+          path: RouterUrl.EVENTPLANS,
+          element:<LEventPage />
+        },
+        {
+          path: RouterUrl.LMERCHANDISE,
+          element:<LMerchandisePage />
         },
       ]
     },

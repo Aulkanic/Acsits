@@ -3,6 +3,8 @@ export const RouterUrl = {
     SIGNUPPAGE:'/Signup',
     LOGIN:'/Login',
     ACHIEVEMENTS:'/ACSISTS_Achievements',
+    LMERCHANDISE:'/ACSISTS_Merchandise',
+    EVENTPLANS:'/ACSISTS_Event/Plans',
     ABOUTUS:'/About_Us',
     HOME:'/Dashboard/Home',
     PROFILE:'/Dashboard/Profile',

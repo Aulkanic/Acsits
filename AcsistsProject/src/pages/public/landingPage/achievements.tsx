@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react'
 import Img1 from '../../../assets/image-10.png'
 import Img2 from '../../../assets/image-11.png'
 import Abstract from '../../../assets/add-a-heading-4-1.png'

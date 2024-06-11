@@ -90,11 +90,9 @@ export const MerchandisePage = () => {
 
   const handleOk = async () => {
     try {
-      console.log(merchImg)
       setLoading(true)
       const values = await form.validateFields();
       const fileList = merchImg;
-      console.log(fileList[0].originFileObj)
       if (fileList && fileList.length > 0 && fileList[0].originFileObj) {
         const currentDatetime = new Date().toISOString().replace(/[-:.]/g, '');
         const filePath = `merchandise/${fileList[0].name}_${officer.info.id}${currentDatetime}`;
