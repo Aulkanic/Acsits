@@ -40,7 +40,8 @@ export const LEventPage = () => {
   return (
     <div className="px-0 sm:px-16">
         <div className='mb-20'>
-        <Calendar         headerRender={({ value, type, onChange, onTypeChange }) => {
+        <Calendar         
+        headerRender={({ value, type, onChange, onTypeChange }) => {
           const start = 0;
           const end = 12;
           const monthOptions = [];
